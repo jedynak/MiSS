@@ -35,7 +35,7 @@ int main(){
     mpz_init2(sum, __NUM_BIT);
     mpz_init2(square, __NUM_BIT);
     gmp_scanf("%d",&precision);
-    while(gmp_scanf("%Zd",num)){
+    while(gmp_scanf("%Zd",num)!=EOF){
 	++count;
 	if(tablen==count){
 	    tablen*=2;
