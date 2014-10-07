@@ -1,10 +1,20 @@
 #include<iostream>
 #include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
 #include<gmp.h>
 
 #define __NUM_BIT 1024*1024*sizeof(mpz_t)
 
 using namespace std;
+
+void cut_str(char str[])
+{
+  long int len = strlen(str);
+  str[--len]='\0';
+  while (str[--len]=='0') 
+    str[len]='\0';
+}
 
 int main(){
     mpz_t *tab,sum,num,sumOfSquares,square;
@@ -13,17 +23,17 @@ int main(){
     int count=0;
     int tablen=1024*1024;
     tab=(mpz_t*)malloc(tablen*sizeof(mpz_t));
-    mpz_init2(sum, );
+    mpz_init2(sum, __NUM_BIT);
     mpz_set_ui(sum,0);
-    mpz_init2(num);
-    mpz_init2(sumOfSquares);
-    mpf_init2(floatSum);
-    mpf_init2(floatSumOfSquares);
-    mpf_init2(variance);
-    mpf_init2(floatSquare);
-    mpf_init2(avarage);
-    mpz_init2(sum);
-    mpz_init2(square);
+    mpz_init2(num, __NUM_BIT);
+    mpz_init2(sumOfSquares, __NUM_BIT);
+    mpf_init2(floatSum, __NUM_BIT);
+    mpf_init2(floatSumOfSquares, __NUM_BIT);
+    mpf_init2(variance, __NUM_BIT);
+    mpf_init2(floatSquare, __NUM_BIT);
+    mpf_init2(avarage, __NUM_BIT);
+    mpz_init2(sum, __NUM_BIT);
+    mpz_init2(square, __NUM_BIT);
     gmp_scanf("%d",&precision);
     while(gmp_scanf("%Zd",num)){
 	++count;
@@ -59,8 +69,18 @@ int main(){
     }
     
     //use gmp_sprintf to create string in order to easier format output???
-    gmp_printf("%.*Ff\n", precision, avarage);
-    gmp_printf("%.*Ff\n", precision, variance);
+    char str_avg[36636];
+    //gmp_printf("%.*Ff\n", precision, avarage);
+    
+    gmp_sprintf(str_avg, "%.*Ff", precision+1, avarage);
+    cut_str(str_avg);
+    printf("%s\n", str_avg, strlen(str_avg));
+    
+    //gmp_printf("%.*Ff\n", precision+1, variance);
+    gmp_sprintf(str_avg, "%.*Ff", precision+1, ariance);
+    cut_str(str_avg);
+    printf("%s\n", str_avg, strlen(str_avg));
+    
     printf("%d\n",period);
     return 0;
 }

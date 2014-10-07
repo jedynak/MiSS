@@ -1,10 +1,20 @@
 #include<iostream>
 #include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
 #include<gmp.h>
 
 #define __NUM_BIT 1024*1024*sizeof(mpz_t)
 
 using namespace std;
+
+void cut_str(char str[])
+{
+  long int len = strlen(str);
+  str[--len]='\0';
+  while (str[--len]=='0') 
+    str[len]='\0';
+}
 
 int main(){
     mpz_t *tab,sum,num,sumOfSquares,square;
@@ -59,8 +69,18 @@ int main(){
     }
     
     //use gmp_sprintf to create string in order to easier format output???
-    gmp_printf("%.*Ff\n", precision, avarage);
-    gmp_printf("%.*Ff\n", precision, variance);
+    char str_avg[36636];
+    //gmp_printf("%.*Ff\n", precision, avarage);
+    
+    gmp_sprintf(str_avg, "%.*Ff", precision+1, avarage);
+    cut_str(str_avg);
+    printf("%s\n", str_avg, strlen(str_avg));
+    
+    //gmp_printf("%.*Ff\n", precision+1, variance);
+    gmp_sprintf(str_avg, "%.*Ff", precision+1, variance);
+    cut_str(str_avg);
+    printf("%s\n", str_avg, strlen(str_avg));
+    
     printf("%d\n",period);
     return 0;
 }
