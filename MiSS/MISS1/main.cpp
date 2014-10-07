@@ -14,6 +14,7 @@ void cut_str(char str[])
   str[--len]='\0';
   while (str[--len]=='0') 
     str[len]='\0';
+  if ( str[len]=='.' ) str[len]='\0';
 }
 
 int main(){
