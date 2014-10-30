@@ -72,7 +72,7 @@ int main(int argc, char *argv[]){
 	mpq_init(tab[count-1]);
 	mpq_set(tab[count-1],num);
 	int i=1;
-	while(i<k){
+	while(i<=k){
 	    mpq_set_si(tmp,(i*i),100);
 	    if(mpq_cmp(tmp,num)>0)break;
 	    ++i;
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
     mpq_init(pos);
     mpq_init(pow);
     for(int i=0;i<k;++i){
-	mpq_set_si(pos,count,10);
+	mpq_set_si(pos,count*(2*i+1),100);
 	mpq_set_si(pow,Ytab[i],1);
 	mpq_sub(pow,pow,pos);
 	mpq_mul(pow,pow,pow);
