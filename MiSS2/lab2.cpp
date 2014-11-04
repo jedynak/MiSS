@@ -58,6 +58,7 @@ int main(int argc, char *argv[]){
     int count=0;
     const int k=10;
     int Ytab[k]={0};
+    int Ymalp[4]={0};
     int tablen=1024*1024;
     tab=(mpq_t*)malloc(tablen*sizeof(mpq_t));
     mpq_init(num);
@@ -99,6 +100,7 @@ int main(int argc, char *argv[]){
 	if(mpq_cmp(tmpKminus,Kminus)>0)mpq_set(Kminus,tmpKminus);
 	if(mpq_cmp(tmpKplus,Kplus)>0)mpq_set(Kplus,tmpKplus);
     }
+    
     mpq_t pos,pow;
     mpq_init(V);
     mpq_init(pos);
@@ -112,6 +114,7 @@ int main(int argc, char *argv[]){
 	//V+=(Ytab[i]-k/count)*(Ytab[i]-k/count)/(k/count);
 	mpq_add(V,V,pow);
     }
+
     /*
     int period;
     for(period=1;period<count;++period){
@@ -139,6 +142,47 @@ int main(int argc, char *argv[]){
     cut_str(str_avg);
     printf("%s\n", str_avg);
 
+    mpf_set_q(printer,V);
+    gmp_sprintf(str_avg, "%.*Ff", precision+1, printer);
+    cut_str(str_avg);
+    printf("%s\n", str_avg);
+    
+    
+    //MALPY
+    mpq_set_si(tmp,1,2); //polowa
+    
+    /*for (int i=1; i<count; i+=2)
+    {
+      if ( (mpq_cmp(tab[i-1], tmp) >= 0 ))
+	if ( mpq_cmp(tab[i], tmp) >=0 )
+	  Ymalp[0]++;
+	else
+	  Ymalp[1]++;
+      else
+	if ( mpq_cmp(tab[i], tmp) >=0 )
+	  Ymalp[2]++;
+	else
+	  Ymalp[3]++;
+      
+    }*/
+    for (int i=1; i<count; i+=2)
+        Ymalp[(!!(mpq_cmp(tab[i-1], tmp)+1))|((!!(mpq_cmp(tab[i], tmp)+1))<<1)]++;
+    
+//    for ( int i=0; i<4; i++ )
+//      printf("  %d   ", Ymalp[i]);
+    
+    mpq_init(V);
+    mpq_init(pos);
+    mpq_init(pow);
+    for(int i=0;i<4;++i){
+	mpq_set_si(pos,count,4);
+	mpq_set_si(pow,Ymalp[i],1);
+	mpq_sub(pow,pow,pos);
+	mpq_mul(pow,pow,pow);
+	mpq_div(pow,pow,pos);	
+	//V+=(Ytab[i]-k/count)*(Ytab[i]-k/count)/(k/count);
+	mpq_add(V,V,pow);
+    }
     mpf_set_q(printer,V);
     gmp_sprintf(str_avg, "%.*Ff", precision+1, printer);
     cut_str(str_avg);
