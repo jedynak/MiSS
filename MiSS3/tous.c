@@ -19,10 +19,9 @@ int main(int argc, char *argv[])
   long unsigned int l_m=atoi(argv[2]);
   long unsigned int i, j, g;
   unsigned short int b_a, b_lfsr;
+  long unsigned int mnm;
   unsigned s;
-  printf("%lu ", l_n);
-  printf("%lu\n", l_m);
-  scanf("%lu %lu", &lfsr, &k);
+  scanf("%lu", &k);
   circle c_lfsr[k];
   for ( i=1; i<k; i++ )
   {
@@ -44,6 +43,8 @@ int main(int argc, char *argv[])
         c_lfsr[i].val |= 1;
   }
   act = &c_lfsr[k-1];
+  mnm = 0;
+  mnm = ~mnm;
   for (i=l_n; i<l_m; i++)
   {
     lfsr=0;
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
         act->val = act->val&~0b1|s&0x1;
         lfsr |= (act->val&0x1)<<j;
     }
-    printf("%lu \n", lfsr);
+    printf("%lu/%lu ", lfsr, mnm);
   }
 
   return 0;

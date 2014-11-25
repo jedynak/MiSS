@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
         act = act->next;
         act->val = max(act->val, act->lfg1->val);
         if ( i >= l_n )
-            printf("%lu ", act->val);
+            printf("%lu/%lu ", act->val, m);
     }
     printf("\n");
     return 0;
