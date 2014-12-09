@@ -1,0 +1,1 @@
+echo "plot \"plot\" with lines; pause mouse key" | gnuplot &
